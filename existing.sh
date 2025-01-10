@@ -1,12 +1,34 @@
 backup() {
-  gitconfig=$(find "$1" -maxdepth 1 -name "$2")
+  declare -A kumar=(
+  ["/etc/"]="gitconfig"
+    ["$HOME/"]=".gitconfig"
+    ["$(pwd)/.git/"]="config"
+    ["$(pwd)/.git/config"]=".worktree"
+  )
+  echo "Searching for existing config files..."
+    for i in "${!kumar[@]}"; do
+   alpha="${kumar[$i]}"
+
+   gitconfig=$(find "$i" -maxdepth 1 -name "$alpha")
   if [ -f "$gitconfig" ]; then
-    echo "The file exists !!"
+    echo "Found "$alpha" config file at "$i" "
   else
-    echo "Git config does not exist"
+    echo "config file not found"
   fi
+
+done
+    loading=( '|' '/' '-' '\')
+    load() {
+while [ 1 ]
+do
+  for j in "${loading[@]}"
+  do
+   echo -ne "\r$i"
+   sleep 0.2
+  done
+done
 }
-backup "/etc" "gitconfig"
-backup "$HOME" ".gitconfig"
-backup "$(pwd)/.git/" "config"
-backup "$(pwd)/.git/worktrees" "config"
+
+
+}
+backup
